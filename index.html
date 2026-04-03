@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Weekly Menu Planner</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="page">
+  <header>
+    <h1>Weekly Menu</h1>
+    <p>Plan your meals for the week — drag dishes into the table</p>
+  </header>
+
+  <!-- Dish bank -->
+  <div class="bank-section">
+    <div class="bank-header">
+      <div class="bank-header-left">
+        <button class="add-btn" id="openModal">
+          <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
+            <path d="M6.5 1v11M1 6.5h11" stroke="white" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+          Add dish
+        </button>
+        <span>Dish library</span>
+      </div>
+      <button class="clear-btn" id="clearWeekBtn">
+        <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+          <path d="M1.5 1.5l9 9M10.5 1.5l-9 9" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+        Clear week
+      </button>
+    </div>
+    <div class="filter-row" id="filterRow"></div>
+    <div class="dish-pool empty" id="dishPool"></div>
+  </div>
+
+  <!-- Weekly table -->
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th></th>
+          <th>Breakfast</th>
+          <th>Lunch</th>
+          <th>Dinner</th>
+        </tr>
+      </thead>
+      <tbody id="menuBody"></tbody>
+    </table>
+  </div>
+
+</div>
+
+<!-- Add dish modal -->
+<div class="modal-bg" id="modalBg">
+  <div class="modal">
+    <h2>Add a dish</h2>
+
+    <div class="field">
+      <label>Dish name</label>
+      <input type="text" id="dishInput" placeholder="e.g. Idli with sambar" maxlength="40" autocomplete="off">
+    </div>
+
+    <div class="field">
+      <label>Category</label>
+      <div class="cat-row">
+        <select id="catSelect"></select>
+        <input type="text" id="catCustom" placeholder="Or type a new one…" maxlength="24" autocomplete="off">
+      </div>
+    </div>
+
+    <div class="field">
+      <label>Tag colour</label>
+      <div class="color-row" id="colorRow"></div>
+    </div>
+
+    <div class="modal-actions">
+      <button class="btn-cancel" id="closeModal">Cancel</button>
+      <button class="btn-add" id="confirmAdd">Add dish</button>
+    </div>
+  </div>
+</div>
+
+<!-- Confirm clear modal -->
+<div class="modal-bg" id="confirmBg">
+  <div class="confirm-modal">
+    <p>Clear <strong>all meals</strong> from the week?<br>Your dish library will stay intact.</p>
+    <div class="confirm-actions">
+      <button class="btn-cancel" id="cancelClear">Cancel</button>
+      <button class="btn-confirm-clear" id="confirmClear">Yes, clear week</button>
+    </div>
+  </div>
+</div>
+</body>
+<script src="script.js"></script>
+</html>
