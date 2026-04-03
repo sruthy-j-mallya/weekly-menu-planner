@@ -214,6 +214,88 @@ function addDish() {
 document.getElementById('confirmAdd').addEventListener('click', addDish);
 dishInput.addEventListener('keydown', e => { if (e.key === 'Enter') addDish(); });
 
+// ── Bulk import modal ──────────────────────────────────────────────
+const bulkModalBg = document.getElementById('bulkModalBg');
+const bulkJsonInput = document.getElementById('bulkJsonInput');
+const bulkError = document.getElementById('bulkError');
+
+function normalizeImportedDishes(parsed) {
+  if (!Array.isArray(parsed)) throw new Error('JSON must be an array of dish objects.');
+  const base = Date.now();
+  const normalized = parsed.map((raw, i) => {
+    if (!raw || typeof raw !== 'object') return null;
+    const name = String(raw.name ?? '').trim();
+    if (!name) return null;
+    const idRaw = raw.id != null ? String(raw.id).trim() : '';
+    const id = idRaw || `${base}-${i}`;
+    const category = raw.category != null ? String(raw.category).trim() : '';
+    const c = raw.color != null ? String(raw.color).trim() : '';
+    const color = /^#[0-9a-fA-F]{6}$/.test(c) ? c : PALETTE[0].hex;
+    return { id, name, category, color };
+  }).filter(Boolean);
+
+  const byId = new Map();
+  normalized.forEach(d => byId.set(d.id, d));
+  return [...byId.values()];
+}
+
+function pruneScheduleToDishes() {
+  const ids = new Set(dishes.map(d => d.id));
+  Object.keys(schedule).forEach(k => {
+    schedule[k] = schedule[k].filter(id => ids.has(id));
+  });
+}
+
+function openBulkModal() {
+  bulkModalBg.classList.add('open');
+  bulkJsonInput.value = '';
+  bulkError.hidden = true;
+  bulkError.textContent = '';
+  setTimeout(() => bulkJsonInput.focus(), 50);
+}
+
+function applyBulkImport() {
+  bulkError.hidden = true;
+  bulkError.textContent = '';
+  const text = bulkJsonInput.value.trim();
+  if (!text) {
+    bulkError.textContent = 'Paste a JSON array first.';
+    bulkError.hidden = false;
+    return;
+  }
+  let parsed;
+  try {
+    parsed = JSON.parse(text);
+  } catch (err) {
+    bulkError.textContent = 'Invalid JSON — check brackets, commas, and quotes.';
+    bulkError.hidden = false;
+    return;
+  }
+  let next;
+  try {
+    next = normalizeImportedDishes(parsed);
+  } catch (err) {
+    bulkError.textContent = err.message || 'Could not read that format.';
+    bulkError.hidden = false;
+    return;
+  }
+  if (!next.length) {
+    bulkError.textContent = 'No valid dishes found — each entry needs at least a name.';
+    bulkError.hidden = false;
+    return;
+  }
+  dishes = next;
+  pruneScheduleToDishes();
+  save();
+  bulkModalBg.classList.remove('open');
+  render();
+}
+
+document.getElementById('openBulkModal').addEventListener('click', openBulkModal);
+document.getElementById('closeBulkModal').addEventListener('click', () => bulkModalBg.classList.remove('open'));
+bulkModalBg.addEventListener('click', e => { if (e.target === bulkModalBg) bulkModalBg.classList.remove('open'); });
+document.getElementById('confirmBulkImport').addEventListener('click', applyBulkImport);
+
 // ── Clear week modal ───────────────────────────────────────────────
 const confirmBg = document.getElementById('confirmBg');
 document.getElementById('clearWeekBtn').addEventListener('click', () => confirmBg.classList.add('open'));

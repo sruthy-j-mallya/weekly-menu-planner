@@ -84,6 +84,13 @@ header p {
   flex: 1;
 }
 
+.bank-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  flex-wrap: wrap;
+}
+
 .bank-header span {
   font-size: 0.75rem;
   font-weight: 500;
@@ -111,6 +118,18 @@ header p {
 .add-btn:hover { background: var(--brown); }
 .add-btn:active { transform: scale(0.97); }
 .add-btn svg { flex-shrink: 0; }
+
+.add-btn-secondary {
+  background: var(--warm-white);
+  color: var(--brown);
+  border: 1.5px solid var(--amber-light);
+}
+.add-btn-secondary:hover {
+  background: #fff5e6;
+  border-color: var(--amber);
+  color: var(--brown);
+}
+.add-btn-secondary svg { stroke: currentColor; }
 
 .clear-btn {
   display: flex;
@@ -339,6 +358,45 @@ td.meal-cell.drag-over {
   -webkit-appearance: none;
 }
 .field input:focus, .field select:focus { border-color: var(--amber); }
+
+.field textarea {
+  width: 100%;
+  border: 1.5px solid var(--border);
+  border-radius: 8px;
+  padding: 0.6rem 0.85rem;
+  font-family: ui-monospace, 'SF Mono', Menlo, monospace;
+  font-size: 0.8rem;
+  line-height: 1.45;
+  background: white;
+  color: var(--ink);
+  outline: none;
+  resize: vertical;
+  min-height: 200px;
+  transition: border-color 0.15s;
+}
+.field textarea:focus { border-color: var(--amber); }
+
+.modal-bulk { width: min(520px, 94vw); }
+
+.modal-hint {
+  font-size: 0.82rem;
+  color: var(--muted);
+  line-height: 1.5;
+  margin: -0.5rem 0 1rem;
+}
+.modal-hint code {
+  font-size: 0.78em;
+  background: rgba(200, 132, 58, 0.12);
+  padding: 0.1em 0.35em;
+  border-radius: 4px;
+}
+
+.bulk-error {
+  font-size: 0.82rem;
+  color: var(--rose);
+  margin: -0.35rem 0 0.5rem;
+}
+.bulk-error[hidden] { display: none; }
 
 .cat-row { display: flex; gap: 0.5rem; }
 .cat-row select, .cat-row input { flex: 1; min-width: 0; }

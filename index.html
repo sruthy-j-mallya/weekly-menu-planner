@@ -18,12 +18,21 @@
   <div class="bank-section">
     <div class="bank-header">
       <div class="bank-header-left">
-        <button class="add-btn" id="openModal">
-          <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
-            <path d="M6.5 1v11M1 6.5h11" stroke="white" stroke-width="2" stroke-linecap="round"/>
-          </svg>
-          Add dish
-        </button>
+        <div class="bank-header-actions">
+          <button class="add-btn" id="openModal">
+            <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
+              <path d="M6.5 1v11M1 6.5h11" stroke="white" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+            Add dish
+          </button>
+          <button type="button" class="add-btn add-btn-secondary" id="openBulkModal" title="Paste JSON array">
+            <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
+              <path d="M2.5 4h8v7h-8zM2.5 2h8v2h-8z" stroke="currentColor" stroke-width="1.2" fill="none"/>
+              <path d="M4 6.5h5M4 8.5h5" stroke="currentColor" stroke-width="1" stroke-linecap="round"/>
+            </svg>
+            Bulk import
+          </button>
+        </div>
         <span>Dish library</span>
       </div>
       <button class="clear-btn" id="clearWeekBtn">
@@ -80,6 +89,25 @@
     <div class="modal-actions">
       <button class="btn-cancel" id="closeModal">Cancel</button>
       <button class="btn-add" id="confirmAdd">Add dish</button>
+    </div>
+  </div>
+</div>
+
+<!-- Bulk import modal -->
+<div class="modal-bg" id="bulkModalBg">
+  <div class="modal modal-bulk">
+    <h2>Bulk import</h2>
+    <p class="modal-hint">Paste a JSON array. Each object should include <code>id</code>, <code>name</code>, <code>category</code>, and <code>color</code> (optional fields get defaults).</p>
+
+    <div class="field">
+      <label for="bulkJsonInput">Dishes JSON</label>
+      <textarea id="bulkJsonInput" rows="14" placeholder='[{"id":"1775203345120","name":"Idli","category":"Bread","color":"#f5c97a"}]' spellcheck="false"></textarea>
+    </div>
+    <p class="bulk-error" id="bulkError" hidden></p>
+
+    <div class="modal-actions">
+      <button type="button" class="btn-cancel" id="closeBulkModal">Cancel</button>
+      <button type="button" class="btn-add" id="confirmBulkImport">Import to library</button>
     </div>
   </div>
 </div>
