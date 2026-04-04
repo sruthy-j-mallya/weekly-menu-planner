@@ -1,6 +1,6 @@
 # Weekly Menu Planner
 
-A simple menu planner where you create a list of dishes with name, category and color, and then drag and drop these dishes to the menu table.
+A simple menu planner where you create a list of dishes with name, category and colour, and then drag and drop these dishes to the menu table. (A vibe-coded BS website made to convince my brother to do weekly menu planning, after a heated argument.)
 
 # Tech Stack
 - HTML
